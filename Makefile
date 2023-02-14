@@ -2,8 +2,18 @@ export ISKAM = /home/litrehinn/Documents/Programs/unisys-toolset/iskam-unisys-em
 export ISKEMU = /home/litrehinn/Documents/Programs/unisys-toolset/iskam-unisys-emu/iskemu
 AM_APPS ?= /home/litrehinn/Documents/Programs/unisys-toolset/iskam-unisys-emu/am-apps
 
-unisys-soc:
+LOCAL = build
+REMOTE = ~/Share/unisys
+
+$(shell mkdir -p ~/Share)
+$(shell mkdir -p $(LOCAL))
+$(shell mkdir -p $(REMOTE))
+
+unisys-sim:
 	$(MAKE) -C unisys-soc sim MEM_DIR=$(ISKAM)/build/memory
+
+unisys-pre:
+	$(MAKE) -C unisys-soc pre-compile MEM_DIR=Z:/unisys/memory
 
 # TEST-NAME
 # AM-NAME
@@ -27,9 +37,27 @@ app-clean: am-clean
 test-image:
 	$(MAKE) -C $(AM_APPS)/tests/$(TEST_NAME) image
 
-app-sim: app-image unisys-soc
-	@mkdir -p build
-	@cp unisys-soc/build/wave.vcd build
-	@cp build/wave.vcd ~/Share/
+app-sim: app-image unisys-sim
+	@mkdir -p $(LOCAL)/wave
+	@mkdir -p $(REMOTE)/wave
+	@cp unisys-soc/build/wave.vcd $(LOCAL)/wave
+	@cp unisys-soc/build/wave.vcd $(REMOTE)/wave
 
-.PHONY: app-image app-clean test-image am-clean unisys-soc app-sim
+app-pre: app-image unisys-pre
+	@mkdir -p $(LOCAL)/memory
+	@mkdir -p $(REMOTE)/memory
+	@mkdir -p $(LOCAL)/rtl
+	@mkdir -p $(REMOTE)/rtl
+	@cp $(ISKAM)/build/memory/* $(LOCAL)/memory
+	@cp $(ISKAM)/build/memory/* $(REMOTE)/memory
+	@cp unisys-soc/build/unisys_pre.sv $(LOCAL)/rtl
+	@cp unisys-soc/build/unisys_pre.sv $(REMOTE)/rtl
+
+iskemu:
+	$(MAKE) -C $(AM_APPS)/$(APP_NAME) run
+
+clean:
+	-@rm -r $(LOCAL)
+	-@rm -r $(REMOTE)
+
+.PHONY: app-image app-clean test-image am-clean unisys-sim app-sim
