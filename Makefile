@@ -19,8 +19,9 @@ unisys-pre:
 # AM-NAME
 
 APP_NAME ?= dummy
-TEST_NAME ?= cpu-tests
+TEST_NAME ?= am-tests
 export ALL ?= bit
+export mainargs ?= v
 
 am-clean:
 	$(MAKE) -C $(ISKAM) clean
@@ -35,6 +36,9 @@ app-clean: am-clean
 	$(MAKE) -C $(AM_APPS)/$(APP_NAME) clean
 
 test-image:
+	$(MAKE) -C $(AM_APPS)/tests/$(TEST_NAME) image
+
+test-clean: am-clean
 	$(MAKE) -C $(AM_APPS)/tests/$(TEST_NAME) image
 
 app-sim: app-image unisys-sim
@@ -53,11 +57,14 @@ app-pre: app-image unisys-pre
 	@cp unisys-soc/build/unisys_pre.sv $(LOCAL)/rtl
 	@cp unisys-soc/build/unisys_pre.sv $(REMOTE)/rtl
 
-iskemu:
+iskemu-app:
 	$(MAKE) -C $(AM_APPS)/$(APP_NAME) run
+
+iskemu-test:
+	$(MAKE) -C $(AM_APPS)/tests/$(TEST_NAME) run
 
 clean:
 	-@rm -r $(LOCAL)
 	-@rm -r $(REMOTE)
 
-.PHONY: app-image app-clean test-image am-clean unisys-sim app-sim
+.PHONY: app-image app-clean test-image am-clean unisys-sim app-sim test-clean
