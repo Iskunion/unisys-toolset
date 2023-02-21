@@ -1,9 +1,9 @@
-export ISKAM = ~/Documents/Programs/unisys-toolset/iskam-unisys-emu/iskam-unisys
-export ISKEMU = ~/Documents/Programs/unisys-toolset/iskam-unisys-emu/iskemu
-AM_APPS ?= ~/Documents/Programs/unisys-toolset/iskam-unisys-emu/am-apps
+export ISKAM = $(shell realpath ~/Documents/Programs/unisys-toolset/iskam-unisys-emu/iskam-unisys)
+export ISKEMU = $(shell realpath ~/Documents/Programs/unisys-toolset/iskam-unisys-emu/iskemu)
+AM_APPS ?= $(shell realpath ~/Documents/Programs/unisys-toolset/iskam-unisys-emu/am-apps)
 
 LOCAL = build
-REMOTE = ~/Share/unisys
+REMOTE = $(shell realpath ~/Share/unisys)
 
 $(shell mkdir -p ~/Share)
 $(shell mkdir -p $(LOCAL))
