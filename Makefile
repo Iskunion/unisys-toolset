@@ -1,6 +1,6 @@
-export ISKAM = /home/litrehinn/Documents/Programs/unisys-toolset/iskam-unisys-emu/iskam-unisys
-export ISKEMU = /home/litrehinn/Documents/Programs/unisys-toolset/iskam-unisys-emu/iskemu
-AM_APPS ?= /home/litrehinn/Documents/Programs/unisys-toolset/iskam-unisys-emu/am-apps
+export ISKAM = ~/Documents/Programs/unisys-toolset/iskam-unisys-emu/iskam-unisys
+export ISKEMU = ~/Documents/Programs/unisys-toolset/iskam-unisys-emu/iskemu
+AM_APPS ?= ~/Documents/Programs/unisys-toolset/iskam-unisys-emu/am-apps
 
 LOCAL = build
 REMOTE = ~/Share/unisys
