@@ -10,10 +10,10 @@ $(shell mkdir -p $(LOCAL))
 $(shell mkdir -p $(REMOTE))
 
 unisys-sim:
-	$(MAKE) -C unisys-soc sim MEM_DIR=$(ISKAM)/build/memory
+	$(MAKE) -C unisys-soc sim MEM_DIR=$(ISKAM)/build/memory GMEM_DIR=$(REMOTE)/memory
 
 unisys-pre:
-	$(MAKE) -C unisys-soc pre-compile MEM_DIR=Z:/unisys/memory
+	$(MAKE) -C unisys-soc pre-compile MEM_DIR=Z:/unisys/memory GMEM_DIR=Z:/unisys/memory
 
 # TEST-NAME
 # AM-NAME
@@ -48,6 +48,16 @@ app-sim: app-image unisys-sim
 	@cp unisys-soc/build/wave.vcd $(REMOTE)/wave
 
 app-pre: app-image unisys-pre
+	@mkdir -p $(LOCAL)/memory
+	@mkdir -p $(REMOTE)/memory
+	@mkdir -p $(LOCAL)/rtl
+	@mkdir -p $(REMOTE)/rtl
+	@cp $(ISKAM)/build/memory/* $(LOCAL)/memory
+	@cp $(ISKAM)/build/memory/* $(REMOTE)/memory
+	@cp unisys-soc/build/unisys_pre.sv $(LOCAL)/rtl
+	@cp unisys-soc/build/unisys_pre.sv $(REMOTE)/rtl
+
+test-pre: test-image unisys-pre
 	@mkdir -p $(LOCAL)/memory
 	@mkdir -p $(REMOTE)/memory
 	@mkdir -p $(LOCAL)/rtl
