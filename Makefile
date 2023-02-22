@@ -47,6 +47,12 @@ app-sim: app-image unisys-sim
 	@cp unisys-soc/build/wave.vcd $(LOCAL)/wave
 	@cp unisys-soc/build/wave.vcd $(REMOTE)/wave
 
+test-sim: test-image unisys-sim
+	@mkdir -p $(LOCAL)/wave
+	@mkdir -p $(REMOTE)/wave
+	@cp unisys-soc/build/wave.vcd $(LOCAL)/wave
+	@cp unisys-soc/build/wave.vcd $(REMOTE)/wave
+
 app-pre: app-image unisys-pre
 	@mkdir -p $(LOCAL)/memory
 	@mkdir -p $(REMOTE)/memory
