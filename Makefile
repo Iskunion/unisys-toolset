@@ -18,7 +18,7 @@ unisys-pre:
 # TEST-NAME
 # AM-NAME
 
-APP_NAME ?= dummy
+APP_NAME ?= iskterm
 TEST_NAME ?= am-tests
 export ALL ?= bit
 export mainargs ?= v
