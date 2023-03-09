@@ -1,6 +1,6 @@
-export ISKAM = $(shell realpath ~/Documents/Programs/unisys-toolset/iskam-unisys-emu/iskam-unisys)
-export ISKEMU = $(shell realpath ~/Documents/Programs/unisys-toolset/iskam-unisys-emu/iskemu)
-AM_APPS ?= $(shell realpath ~/Documents/Programs/unisys-toolset/iskam-unisys-emu/am-apps)
+export ISKAM = $(shell realpath ./iskam-unisys-emu/iskam-unisys)
+export ISKEMU = $(shell realpath ./iskam-unisys-emu/iskemu)
+AM_APPS ?= $(shell realpath ./iskam-unisys-emu/am-apps)
 
 LOCAL = build
 REMOTE = $(shell realpath ~/Share/unisys)
